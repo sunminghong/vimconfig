@@ -38,7 +38,7 @@ else
   exec "$binary" $opts ${1:+"$@"}
 fi
 
-
+**记住:在终端下运行mvim时,后面必须跟上文件名(可以随意的一个文件名)**
 
 That's ok !
 
