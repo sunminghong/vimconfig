@@ -1,5 +1,6 @@
 "设置颜色主题
-colorscheme torte
+colorscheme allen-blackboard
+"colorscheme torte
 "colorscheme busybee
 
 if has("gui_running")
@@ -42,7 +43,7 @@ Bundle 'ervandew/supertab'
 "Bundle 'scrooloose/syntastic'
 Bundle 'tpope/vim-bundler'
 "Bundle 'kchmck/vim-coffee-script'
-Bundle 'flazz/vim-colorschemes'
+"Bundle 'flazz/vim-colorschemes'
 "Bundle 'tpope/vim-fugitive'
 "Bundle 'tpope/vim-haml'
 "Bundle 'tpope/vim-rails'

@@ -1,12 +1,15 @@
 macvim .vimrc file manage
 
 1.
-mkdir vimconfig
-git clone git@github.com:sunminghong/vimconfig.git
+git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+
+mkdir ~/vimconfig
+cd ~/vimconfig
+git clone git@github.com:sunminghong/vimconfig.git ./
 
 2.
 cp .vimrc ~/
-cp -rf ./vim ~/
+cp -r ./vim ~/
 
 3.open macvim
 :BuddleInstall
