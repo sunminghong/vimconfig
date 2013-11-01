@@ -41,6 +41,24 @@ else
   exec "$binary" $opts ${1:+"$@"}
 fi
 
+6.配置ctags
+a.download ctags (use google to search)
+b.configure && make && make install
+c. :BuddleInstall
+
+6.2 配置golang 的 ctags
+a. go get https://github.com/jstemmer/gotags
+b. go build gotags
+c. cp gotags /usr/local/bin
+
+6.3 配置golang的completion
+
+
+
+$ brew install coreutils
+$ ln -s /usr/local/bin/greadlink /usr/local/bin/readlinko
+** Vundle install : https://github.com/Blackrush/vim-gocode**
+
 **记住:在终端下运行mvim时,后面必须跟上文件名(可以随意的一个文件名)**
 
 That's ok !

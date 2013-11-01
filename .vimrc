@@ -6,9 +6,9 @@ colorscheme allen-blackboard
 if has("gui_running")
     set go=aAce              " 去掉难看的工具栏和滑动条
     set guifont=Monaco:h14   " 设置默认字体为monaco
-    set showtabline=2        " 开启自带的tab栏
+    "set showtabline=2        " 开启自带的tab栏
     set columns=84          " 设置宽
-    set lines=46             " 设置长
+    set lines=50             " 设置长
 endif
 
 "字体设置
@@ -41,6 +41,7 @@ Bundle 'scrooloose/nerdcommenter'
 Bundle 'honza/vim-snippets'
 Bundle 'ervandew/supertab'
 "Bundle 'scrooloose/syntastic'
+Bundle 'kevinw/pyflakes-vim'
 Bundle 'tpope/vim-bundler'
 "Bundle 'kchmck/vim-coffee-script'
 "Bundle 'flazz/vim-colorschemes'
@@ -56,8 +57,10 @@ Bundle 'Lokaltog/vim-powerline'
 "Bundle 'vim-ruby/vim-ruby'
 "Bundle 'slim-template/vim-slim'
 ""Bundle 'sudo.vim'
+Bundle "majutsushi/tagbar"
 Bundle 'xml.vim'
 Bundle 'ZenCoding.vim'
+"Bundle 'Blackrush/vim-gocode'
 
 set rtp+=/usr/local/go/misc/vim
 
@@ -93,7 +96,7 @@ set hlsearch			"设置搜索结果高亮
 set incsearch			"设置搜索的同时高亮
 
 "忽略大小写查找
-set ic
+"set ic
 
 ""auto completed
 ""RUBY
@@ -117,8 +120,9 @@ set foldmethod=indent
 " 打开文件默认不折叠
 set foldlevelstart=99
 
-let g:vim_markdown_folding_disabled = 0
+let g:vim_markdown_folding_disabled = 1
 
+let mapleader = ","
 
 "  映射NERDTree插件
 ":map <leader>n :NERDTree<CR>  
@@ -174,20 +178,70 @@ autocmd BufNewFile alltests.py 0r ~/.vim/skeleton/alltests.py
 autocmd BufNewFile *.py 0r ~/.vim/skeleton/skeleton.py
 
 ""ctags
+set tags=tags;/
 "set tags+=~/gitdb/rails/tags
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
 
 "auto completed
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
 
+"让Vim的补全菜单行为与一般IDE一致(参考VimTip1228)
+set completeopt+=longest
+ 
+"离开插入模式后自动关闭预览窗口
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
+let g:acp_completeoptPreview = 1
+ 
+"回车即选中当前项
+inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
+ 
+"上下左右键的行为
+inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
+inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
+inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
+inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
+
+let g:acp_completeoptPreview = 1
 
 " Enable omni completion.
 autocmd FileType python setlocal et sta sw=4 sts=4			"将python 文件的tab键用空格代替
+
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+"autocmd FileType go setlocal omnifunc=gocomplete#Complete
+
+let g:SuperTabDefaultCompletionType = "context"
 
 " Enable heavy omni completion.
 if !exists('g:neocomplcache_omni_patterns')
@@ -266,5 +320,19 @@ map <F7> :NERDTreeToggle<CR>
 imap <F7> <ESC>:NERDTreeToggle<CR>
 map <c-F7> :NERDTree<cr>
 
+nmap <F8> :TagbarToggle<CR>
+let g:tagbar_autofocus = 1 
+
+nmap <F3> :set columns=168<CR>
+nmap <M-F3> :set columns=84<CR>
+
+
 map <MiddleMouse> <Nop>
 map <2-MiddleMouse> <Nop>
+
+"执行python文件运行E即可 
+map <buffer> <F5> :w<CR>:!/usr/bin/env python % <CR>
+
+au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} map <leader>p :silent !open -a Mou.app '%:p'<cr>
+
+"au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} map <leader>p :silent !open -n -W -q-a Mou.app '%:p'<cr>
