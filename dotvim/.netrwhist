@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/Users/Team1201/works/sg/git/sgsdk/91/ios/ane/91sdkstudy/NdComPlatform/src/com'
+let g:netrw_dirhist_2='/Users/Team1201/works/sg/git/sgsdk/91/ios/ane/91sdkstudy/NdComPlatform/src/com/nd'
+let g:netrw_dirhist_3='/Users/Team1201/works/sg/git/sgsdk/91/ios/ane/91sdkstudy/NdComPlatform/src/com/nd/complatform'
+let g:netrw_dirhist_4='/Users/Team1201/works/GitHub/golang/src/github.com/sunminghong/goterm'
+let g:netrw_dirhist_5='/Users/Team1201/works/sg/git/web/pay/includes'
+let g:netrw_dirhist_6='/Users/Team1201/works/gitolite-admin/conf'
+let g:netrw_dirhist_7='/private/etc/apache2'

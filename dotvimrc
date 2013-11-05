@@ -1,6 +1,5 @@
 "设置颜色主题
-colorscheme allen-blackboard
-"colorscheme torte
+colorscheme allen-blackboard "colorscheme torte
 "colorscheme busybee
 
 if has("gui_running")
@@ -23,8 +22,15 @@ set nocompatible
 
 filetype off                   " required!
 
+
+let g:SuperTabRetainCompletionType = 2
+let g:SuperTabDefaultCompletionType = "<C-X><C-O>" 
+"let g:SuperTabCompletionContexts = "context"
+
+
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
+
 
 " let Vundle manage Vundle
 " required! 
@@ -33,7 +39,6 @@ Bundle 'gmarik/vundle'
 Bundle 'thoughtbot/vim-rspec'
 Bundle 'ack.vim'
 Bundle 'comments.vim'
-"Bundle 'authorinfo.vim'
 Bundle 'ctrlp.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/nerdcommenter'
@@ -57,12 +62,19 @@ Bundle 'Lokaltog/vim-powerline'
 "Bundle 'vim-ruby/vim-ruby'
 "Bundle 'slim-template/vim-slim'
 ""Bundle 'sudo.vim'
-Bundle "majutsushi/tagbar"
+Bundle 'majutsushi/tagbar'
 Bundle 'xml.vim'
 Bundle 'ZenCoding.vim'
-"Bundle 'Blackrush/vim-gocode'
 
-set rtp+=/usr/local/go/misc/vim
+"Bundle 'cespare/vim-golang'
+Bundle 'dgryski/vim-godef'
+Bundle 'Blackrush/vim-gocode'
+
+"Bundle 'Shougo/unite.vim'
+"Bundle 'JessicaKMcIntosh/TagmaTasks'
+"Bundle 'sontek/rope-vim'
+
+"set rtp+=/usr/local/go/misc/vim
 
 
 filetype plugin indent on
@@ -109,7 +121,6 @@ set incsearch			"设置搜索的同时高亮
 "
 "autocmd vimenter * if !argc() | NERDTree | endif
 "autocmd VimEnter * NER
-
 
 
 " 设定文件浏览器目录为当前目录  
@@ -221,15 +232,14 @@ autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 let g:acp_completeoptPreview = 1
  
 "回车即选中当前项
-inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
+"inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
  
 "上下左右键的行为
 inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-inoremap <expr> <PageDown> pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<PageDown>"
-inoremap <expr> <PageUp>   pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<PageUp>"
+inoremap <expr> j pumvisible() ? "\<C-n>" : "\<j>"
+inoremap <expr> k   pumvisible() ? "\<C-p>" : "\<k>"
 
-let g:acp_completeoptPreview = 1
 
 " Enable omni completion.
 autocmd FileType python setlocal et sta sw=4 sts=4			"将python 文件的tab键用空格代替
@@ -240,8 +250,6 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 "autocmd FileType go setlocal omnifunc=gocomplete#Complete
-
-let g:SuperTabDefaultCompletionType = "context"
 
 " Enable heavy omni completion.
 if !exists('g:neocomplcache_omni_patterns')
