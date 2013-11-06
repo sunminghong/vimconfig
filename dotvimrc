@@ -237,8 +237,8 @@ let g:acp_completeoptPreview = 1
 "上下左右键的行为
 inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
 inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
-inoremap <expr> j pumvisible() ? "\<C-n>" : "\<j>"
-inoremap <expr> k   pumvisible() ? "\<C-p>" : "\<k>"
+inoremap <expr> j pumvisible() ? "\<C-n>" : "j"
+inoremap <expr> k   pumvisible() ? "\<C-p>" : "k"
 
 
 " Enable omni completion.
