@@ -33,19 +33,24 @@ function s:DetectFirstLine()
     "跳转到指定区域的第一行，开始操作
     exe 'normal '.1.'G'
     let arrData = [
-                \['sh',['^#!.*$']],
-                \['python',['^#!.*$','^#.*coding:.*$']],
-                \['php',['^<?.*']]
+                \['sh',['^#!.*$'], 'j'],
+                \['python',['^#!.*$','^#.*coding:.*$'], 'j'],
+                \['go',['^package.*$'], 'k'],
+                \['php',['^<?.*'], 'j']
                 \]
     let oldNum = line('.')
     while 1
         let line = getline('.')
         let findMatch = 0
-        for [t,v] in arrData
+		let de = 'j'
+        for [t,v,u] in arrData
             if g:CheckFileType(t)
                 for it in v
                     if line =~ it
                         let findMatch = 1
+						exe 'normal '.u
+						let de = u
+
                         break
                     endif
                 endfor
@@ -54,10 +59,14 @@ function s:DetectFirstLine()
         if findMatch != 1
             break
         endif
-        normal j
         "到了最后一行了，所以直接o就可以了
         if oldNum == line('.')
-            normal o
+			if de == 'k'
+				normal O
+			else
+				normal o
+				normal o
+			endif
             return
         endif
         let oldNum = line('.')
@@ -69,7 +78,7 @@ function s:BeforeTitle()
     for [t,v] in arrData
         if g:CheckFileType(t)
             call setline('.',v)
-            normal o
+            "normal o
             break
         endif
     endfor
@@ -85,7 +94,7 @@ function s:AfterTitle()
         endif
     endfor
 endfunction
-function s:AddTitle()
+function! s:AddTitle()
     "检查开始插入作者信息的行
     call s:DetectFirstLine()
     "判断是否支持多行注释
@@ -109,24 +118,14 @@ function s:AddTitle()
         endif
     endif
 
-    "在第一行之前做的事情
-    call s:BeforeTitle()
-
     let firstLine = line('.')
     call setline('.',noTypeChar.'=============================================================================')
     normal o
     call setline('.',noTypeChar.preChar.'     FileName: '.expand("%:t"))
     normal o
-    call setline('.',noTypeChar.preChar.'         Desc: ')
-    let gotoLn = line('.')
+    call setline('.',noTypeChar.preChar.'       Author: '.g:vimrc_author. ', '.g:vimrc_email.', '.g:vimrc_homepage)
     normal o
-    call setline('.',noTypeChar.preChar.'       Author: '.g:vimrc_author)
-    normal o
-    call setline('.',noTypeChar.preChar.'        Email: '.g:vimrc_email)
-    normal o
-    call setline('.',noTypeChar.preChar.'     HomePage: '.g:vimrc_homepage)
-    normal o
-    call setline('.',noTypeChar.preChar.'      Version: 0.0.1')
+    call setline('.',noTypeChar.preChar.'         Team: '.g:vimrc_team)
     normal o
     call setline('.',noTypeChar.preChar.'   LastChange: '.strftime("%Y-%m-%d %H:%M:%S"))
     normal o
@@ -135,16 +134,42 @@ function s:AddTitle()
     call setline('.',noTypeChar.'=============================================================================')
     let lastLine = line('.')
 
-    "在最后一行之后做的事情
-    call s:AfterTitle()
-
     if hasMul == 1
         exe 'normal '.firstLine.'Gv'.lastLine.'G'.s:t_mapleader.'cm'
     else
         exe 'normal '.firstLine.'Gv'.lastLine.'G'.s:t_mapleader.'cl'
     endif
 
-    exe 'normal '.gotoLn.'G'
+	exe 'normal '.lastLine.'G'
+
+    normal o
+    normal o
+    normal o
+
+    "call setline('.',noTypeChar.preChar.'         Desc: ')
+    let gotoLn = line('.')
+    normal o
+	"call setline('.','doc string for this file')
+    normal o
+	"exe 'normal '.gotoLn.'G'.s:t_mapleader.'cl'
+    let lastLine = line('.')
+
+    if hasMul == 1
+        exe 'normal '.gotoLn.'Gv'.lastLine.'G'.s:t_mapleader.'cm'
+    else
+        exe 'normal '.gotoLn.'Gv'.lastLine.'G'.s:t_mapleader.'cl'
+    endif
+
+
+    exe 'normal '. gotoLn .'G'
+    "在第一行之前做的事情
+    call s:BeforeTitle()
+
+    exe 'normal '.(gotoLn + 1).'G'
+    "在最后一行之后做的事情
+    call s:AfterTitle()
+
+    exe 'normal '.(gotoLn + 1).'G'
     startinsert!
     echohl WarningMsg | echo "Succ to add the copyright." | echohl None
 endf
