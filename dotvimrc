@@ -5,9 +5,9 @@ colorscheme allen-blackboard "colorscheme torte
 if has("gui_running")
     set go=aAce              " 去掉难看的工具栏和滑动条
     set guifont=Monaco:h14   " 设置默认字体为monaco
-    "set showtabline=2        " 开启自带的tab栏
-    set columns=84          " 设置宽
-    set lines=50             " 设置长
+    "set showtabline=2       " 开启自带的tab栏
+    set columns=120          " 设置宽
+    set lines=49             " 设置长
 endif
 
 "字体设置
@@ -20,6 +20,34 @@ let s:font_korean='GulimChe:h12:cDEFAULT'
 "不兼容vi模式
 set nocompatible
 
+"显示行号
+set number
+"按照C语法自动缩进
+set cindent
+"设置缩进长度
+"详见http://dddspace.com/2010/03/vim-indentation-and-space-config.html
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set expandtab
+"显示括号对应
+set showmatch
+"实时显示搜索结果
+set incsearch
+"编码设置
+set encoding=utf-8
+"set fileencodings=utf-8,gb2312,ucs-bom,utf-16,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+set fileencodings=ucs-bom,utf-8,chinese,latin1
+"set fencs=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936  
+set fileformats=unix,mac,dos
+set autoindent
+set smartindent
+set showcmd
+
+set nobackup			"取消备份
+set hlsearch			"设置搜索结果高亮
+set incsearch			"设置搜索的同时高亮
+
 filetype off                   " required!
 
 
@@ -27,6 +55,8 @@ let g:SuperTabRetainCompletionType = 2
 let g:SuperTabDefaultCompletionType = "<C-X><C-O>" 
 "let g:SuperTabCompletionContexts = 'context'
 
+let g:godef_split = 0
+let g:godef_same_file_in_same_window=1
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
@@ -78,34 +108,6 @@ Bundle 'Blackrush/vim-gocode'
 
 
 filetype plugin indent on
-
-"显示行号
-set number
-"按照C语法自动缩进
-set cindent
-"设置缩进长度
-"详见http://dddspace.com/2010/03/vim-indentation-and-space-config.html
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-set noexpandtab
-"显示括号对应
-set showmatch
-"实时显示搜索结果
-set incsearch
-"编码设置
-set encoding=utf-8
-"set fileencodings=utf-8,gb2312,ucs-bom,utf-16,cp936,gb18030,big5,euc-jp,euc-kr,latin1
-set fileencodings=ucs-bom,utf-8,chinese,latin1
-"set fencs=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936  
-set fileformats=unix,mac,dos
-set autoindent
-set smartindent
-set showcmd
-
-set nobackup			"取消备份
-set hlsearch			"设置搜索结果高亮
-set incsearch			"设置搜索的同时高亮
 
 "忽略大小写查找
 "set ic
@@ -321,7 +323,7 @@ function! BaddList(...)
     for afile in baddList
         execute 'badd '.afile
     endfor
-endfunctio
+endfunction
 
 set autochdir       "自动切换工作目录，以当前打开的文件所在目录为准
 
@@ -333,7 +335,18 @@ nmap <F8> :TagbarToggle<CR>
 let g:tagbar_autofocus = 1 
 
 nmap <F3> :set columns=168<CR>
-nmap <M-F3> :set columns=84<CR>
+nmap <M-F3> :set columns=120<CR>
+
+map ,ch :call SetColorColumn()<CR>
+function! SetColorColumn()
+    let col_num = virtcol(".")
+    let cc_list = split(&cc, ',')
+    if count(cc_list, string(col_num)) <= 0
+        execute "set cc+=".col_num
+    else
+        execute "set cc-=".col_num
+    endif
+endfunction
 
 
 map <MiddleMouse> <Nop>
