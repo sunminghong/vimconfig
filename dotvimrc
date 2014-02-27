@@ -93,12 +93,16 @@ Bundle 'Lokaltog/vim-powerline'
 "Bundle 'slim-template/vim-slim'
 ""Bundle 'sudo.vim'
 Bundle 'majutsushi/tagbar'
+
+" lua config doc: https://github.com/vim-scripts/lua.vim 
 Bundle 'xml.vim'
 Bundle 'ZenCoding.vim'
 
 "Bundle 'cespare/vim-golang'
 Bundle 'dgryski/vim-godef'
 Bundle 'Blackrush/vim-gocode'
+Bundle 'xolox/vim-misc'
+Bundle 'xolox/vim-lua-ftplugin'
 
 "Bundle 'Shougo/unite.vim'
 "Bundle 'JessicaKMcIntosh/TagmaTasks'
