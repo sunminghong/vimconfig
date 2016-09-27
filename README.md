@@ -1,19 +1,17 @@
 ###macvim 配置说明档
 
-1. 安装vundle
-	git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
+1. 复制.vim 配置文件
+	git clone git@github.com:sunminghong/vimconfig.git ~/vimconfig  
 
-2. 复制.vim 配置文件
+	cp ~/vimconfig/dotvimrc ~/.vimrc  
+	cp -rf ~/vimconfig/dotvim  ~/.vim  	
+	rm -rf ~/vimconfig  
+	
+2. 安装vundle
+	git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle  
 
-	mkdir ~/vimconfig
-	cd ~/vimconfig
-	git clone git@github.com:sunminghong/vimconfig.git ./
-
-	cp dotvimrc ~/.vimrc
-	cp -rf dotvim ~/.vim
-
-3. open macvim 安装插件
-	:BuddleInstall
+3. open macvim 安装插件  
+	:BuddleInstall  
 
 
 4. 中文输入法问题：
