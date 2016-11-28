@@ -1,13 +1,33 @@
 "设置颜色主题
-colorscheme allen-blackboard "colorscheme torte
+colorscheme foursee "colorscheme torte
 "colorscheme busybee
 
 if has("gui_running")
     set go=aAce              " 去掉难看的工具栏和滑动条
-    set guifont=Monaco:h14   " 设置默认字体为monaco
-    "set showtabline=2       " 开启自带的tab栏
-    set columns=120          " 设置宽
-    set lines=49             " 设置长
+    "set guifont=Monaco:h14   " 设置默认字体为monaco
+    ""set showtabline=2       " 开启自带的tab栏
+    "set columns=120          " 设置宽
+    "set lines=49             " 设置长
+endif
+
+let g:tagbar_ctags_bin="/usr/bin/ctags"
+
+
+" Set font according to system
+if has("mac") || has("macunix")
+    set gfn=Source\ Code\ Pro:h15,Menlo:h15
+elseif has("win16") || has("win32")
+    set gfn=Source\ Code\ Pro:h12,Bitstream\ Vera\ Sans\ Mono:h11
+elseif has("linux")
+    set gfn=Source\ Code\ Pro:h12,Bitstream\ Vera\ Sans\ Mono:h11
+elseif has("unix")
+    set gfn=Monospace\ 11
+endif
+
+" Open MacVim in fullscreen mode
+if has("gui_macvim")
+    set fuoptions=maxvert,maxhorz
+    au GUIEnter * set fullscreen
 endif
 
 "字体设置
@@ -49,6 +69,14 @@ set hlsearch			"设置搜索结果高亮
 set incsearch			"设置搜索的同时高亮
 
 filetype off                   " required!
+
+
+
+" Sets how many lines of history VIM has to remember
+set history=700
+"add vertical lines on columns
+set colorcolumn=80,120
+
 
 
 let g:SuperTabRetainCompletionType = 2
@@ -341,6 +369,12 @@ let g:tagbar_autofocus = 1
 nmap <F3> :set columns=168<CR>
 nmap <M-F3> :set columns=120<CR>
 
+" Default key map tasklist
+if !hasmapto('<Plug>TaskList')
+    map <unique> <Leader>t <Plug>TaskList
+endif
+"
+
 map ,ch :call SetColorColumn()<CR>
 function! SetColorColumn()
     let col_num = virtcol(".")
@@ -357,8 +391,9 @@ map <MiddleMouse> <Nop>
 map <2-MiddleMouse> <Nop>
 
 "执行python文件运行E即可 
-map <buffer> <F5> :w<CR>:!/usr/bin/env python % <CR>
+"map <buffer> <F5> :w<CR>:!/usr/bin/env python % <CR>
 
 au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} map <leader>p :silent !open -a Mou.app '%:p'<cr>
 
 "au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} map <leader>p :silent !open -n -W -q-a Mou.app '%:p'<cr>
+

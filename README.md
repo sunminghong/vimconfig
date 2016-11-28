@@ -1,32 +1,23 @@
 ###macvim 配置说明档
 
-1. 安装vundle
-	git clone https://github.com/gmarik/vundle.git ~/.vim/bundle/vundle
-
-2. 复制.vim 配置文件
-
-	mkdir ~/vimconfig
-	cd ~/vimconfig
-	git clone git@github.com:sunminghong/vimconfig.git ./
-
-	cp dotvimrc ~/.vimrc
-	cp -rf dotvim ~/.vim
-
-3. open macvim 安装插件
-	:BuddleInstall
+1. 获取文件 
+    ./set.sh
+    
+3. open macvim 安装插件  
+	:BuddleInstall  
 
 
 4. 中文输入法问题：
 我用的是搜狗输入法，但在编辑模式中输入中文时，常常会触发MacVim的命令，原因是输入法没有完全截获按键；
-解决方法:在命令行输入以下命令,
+解决方法:在命令行输入以下命令,  
 	defaults write org.vim.MacVim MMUseInlineIm 0
 
 5. 在终端启动mvim
 
-macvim.app包内容里有一个mvim文件，将其拷贝到
+macvim.app包内容里有一个mvim文件，将其拷贝到 
 	$sudo cp -f mvim /usr/bin/
 
-这里在终端通过mvim指令即可运行或编辑文件，编辑文件每次都是新建窗口，让他支持tab可以编辑这个mvim文件，首行加上
+这里在终端通过mvim指令即可运行或编辑文件，编辑文件每次都是新建窗口，让他支持tab可以编辑这个mvim文件，首行加上  
 	tabs=true
 
 然后最后一个if 块替换成:
@@ -45,27 +36,27 @@ macvim.app包内容里有一个mvim文件，将其拷贝到
 
 6. 配置ctags
 
-	a.download ctags (use google to search)
-	b.configure && make && make install
-	c. :BuddleInstall
+	a.download http://prdownloads.sourceforge.net/ctags/ctags-5.8.tar.gz (use google to search)  
+	b.configure && make && sudo make install  
+	c. :BuddleInstall  
 
-7. 配置golang 的 ctags
-	go get https://github.com/jstemmer/gotags
-	go build gotags
-	cp gotags /usr/local/bin
+7. 配置golang 的 ctags  
+	go get https://github.com/jstemmer/gotags  
+	go build gotags  
+	cp gotags /usr/local/bin 
 
-8. 配置golang的completion
-	*用<tab>键可以显示自动补全菜单,用<j>,<k>可以上线浏览补全菜单.*
+8. 配置golang的completion  
+	*用<tab>键可以显示自动补全菜单,用<j>,<k>可以上线浏览补全菜单.*  
 
-	go get github.com/bradfitz/goimports
-	go get code.google.com/p/rog-go/exp/cmd/godef
-	go get github.com/nsf/gocode
+	go get github.com/bradfitz/goimports  
+	go get code.google.com/p/rog-go/exp/cmd/godef  
+	go get github.com/nsf/gocode  
 
-	brew install coreutils
-	ln -s /usr/local/bin/greadlink /usr/local/bin/readlinko
+	brew install coreutils  
+	ln -s /usr/local/bin/greadlink /usr/local/bin/readlinko  
 
-**由于macvim 是不执行.bashrc 的,所以需要将gocode/godef/goimports copy /usr/local/bin 或者 将go bin 路径添加到 /etc/paths 中**
-	/Users/XXX/works/GitHub/golang/bin
+**由于macvim 是不执行.bashrc 的,所以需要将gocode/godef/goimports copy /usr/local/bin 或者 将go bin 路径添加到 /etc/paths 中**  
+	/Users/XXX/works/GitHub/golang/bin  
 
 **如果发现go文件保存,总是自动检查文件语法错误和格式化,那么可以将vimconfig/dotvim/bundle/vim-gocode/ftplugin/go/的以下文件覆盖 ~/.vim下的同路径文件**
 
